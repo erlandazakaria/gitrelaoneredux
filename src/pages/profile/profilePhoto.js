@@ -10,7 +10,8 @@ class profilePhoto extends Component{
     }
     handleSelectedFile(event) {
         document.getElementById('selectFile').innerHTML = event.target.value;
-        this.props.editProfile("pic", event.target.value);
+        this.props.editProfile("pic", event.target.files[0]);
+
     }
     render(){
         const {profile} = this.props;
@@ -40,11 +41,11 @@ class profilePhoto extends Component{
                         type="file"
                         className="custom-file-input cloudinary-fileupload"
                         data-cloudinary-field="image_id"
-                        
+                        id="cloudinary-upload"
                         aria-describedby="inputGroupFileAddon01"
                         onChange={ this.handleSelectedFile }
                         />
-                        <label className="custom-file-label" id="selectFile" htmlFor="inputGroupFile01">
+                        <label className="custom-file-label chooseFile" id="selectFile" htmlFor="inputGroupFile01">
                             Choose file
                         </label>
                     </div>

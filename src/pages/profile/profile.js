@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import {MDBBtn} from "mdbreact";
 import {connect} from 'react-redux';
 // import _ from 'lodash';
-import {getProfile} from '../../actions/profileAction';
+import {getProfile, saveProfile} from '../../actions/profileAction';
 import {getSkills} from '../../actions/skillsAction';
 import {getSubmittedSkills, addSubmittedSkills, removeSubmittedSkills} from '../../actions/skillsSubmittedAction';
 
@@ -19,16 +19,22 @@ import "./profile.css";
 class profile extends Component{
     constructor(props){
         super(props);
-        this.state = {
-            value: ''
-        };
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount(){
-        let session_id = 1;
+        let session_id = 41;
         this.props.getProfile(session_id);
         this.props.getSkills();
         this.props.getSubmittedSkills();
+    }
+
+    handleSubmit(){
+        let session_id = 41;
+        
+        // console.log(this.props.profile);
+        // console.log(this.props.profile.temporaryPic);
+        this.props.saveProfile(session_id, this.props.profile.temporaryPic, this.props.profile);
     }
 
     render(){  
@@ -48,7 +54,7 @@ class profile extends Component{
                                 <h1 className="col-md-8 content-title">Edit Profile</h1>
                                 <div className="col-md-4">
                                     <div className="pull-right">
-                                        <MDBBtn size="sm" type="submit" color="primary">Simpan</MDBBtn>
+                                        <MDBBtn size="sm" type="submit" color="primary" onClick={ this.handleSubmit }>Simpan</MDBBtn>
                                     </div>
                                 </div>
                         </div>
@@ -90,4 +96,4 @@ function mapStateToProps(state, ownProps){
     
 }
 
-export default connect(mapStateToProps,{getProfile, getSkills, getSubmittedSkills, addSubmittedSkills, removeSubmittedSkills})(profile);
+export default connect(mapStateToProps,{getProfile, saveProfile, getSkills, getSubmittedSkills, addSubmittedSkills, removeSubmittedSkills})(profile);
